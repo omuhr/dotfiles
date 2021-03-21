@@ -1,0 +1,3 @@
+nitrogen --set-zoom-fill --random &
+picom &
+spotifyd &
