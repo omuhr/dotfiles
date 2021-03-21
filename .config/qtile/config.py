@@ -34,6 +34,10 @@ from libqtile.utils import guess_terminal
 mod = "mod4"
 terminal = guess_terminal()
 
+# FG and BG colors
+FG = "#c7ccd1"
+BG = "#1c2023"
+
 keys = [
     # Switch between windows
     Key([mod], "h",
@@ -159,20 +163,22 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-                widget.CurrentLayout(background="#1c2023", foreground='#c7ccd1'),
-                widget.GroupBox(background="#1c2023", foreground='#c7ccd1'),
-                widget.Prompt(background="#1c2023", foreground='#c7ccd1'),
-                widget.WindowName(background="#1c2023", foreground='#c7ccd1'),
-                widget.Chord(
-                    chords_colors={
-                        'launch': ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                ),
+                widget.GroupBox(background=BG,
+                                foreground=FG),
+                widget.Prompt(background=BG,
+                              foreground=FG),
+                widget.WindowName(background=BG,
+                                  foreground=FG),
                 widget.Systray(),
-                widget.Clock(format='%m-%d %a %I:%M %p',background="#1c2023", foreground='#c7ccd1'),
-                widget.QuickExit(background="#1c2023", foreground='#c7ccd1'),
-                widget.OpenWeather(format="{main_temp} °{units_temperature} {humidity}% {weather_details}",location="Partille",background="#1c2023", foreground='#c7ccd1')
+                widget.OpenWeather(format="{temp} °{units_temperature}",
+                                   location="Partille",
+                                   background=BG,
+                                   foreground=FG),
+                widget.Sep(background=BG,
+                           foreground=FG),
+                widget.Clock(format='%a %H:%M %d/%m',
+                             background=BG,
+                             foreground=FG),
             ],
             24,
         ),
