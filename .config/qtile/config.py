@@ -117,16 +117,6 @@ keys = [
         lazy.shutdown(),
         desc="Shutdown Qtile"),
 
-    # Launch bindings
-    Key([mod], "r",
-        lazy.spawncmd(),
-        desc="Spawn a command using a prompt widget"),
-    Key([mod], "Return",
-        lazy.spawn(terminal),
-        desc="Launch terminal"),
-    Key([mod], "b",
-        lazy.spawn("firefox"),
-        desc="Launch browser")
 ]
 
 groups = [Group(i) for i in "123456789"]
