@@ -1,0 +1,30 @@
+!!! CAUTION - CREDENTIALS IN SPOTIFYD AND LOCATION IN QTILE WEATHER !!!
+
+paru
+alacritty
+fish
+tldr
+picom
+nitrogen
+sxhkd
+feh
+ckb-next
+pcmanfm
+firefox
+python
+python2
+python2-pip
+python-pip
+tldr
+discord
+zoom
+steam
+lutris
+spotifyd
+spotify-tui
+mailspring -- probably
+
+TODO:
+- delete in vim w/o copying?
+- figure out gtk themeing (lxsession, lxappearance?)
+- CLI file manager
