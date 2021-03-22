@@ -105,11 +105,13 @@ keys = [
         lazy.screen.prev_group(),
         desc="Go to next group"),
 
-    # Kill current window
+    # Miscellaneous
+    Key([mod], "period",
+        lazy.hide_show_bar(),
+        desc="Toggle bar"),
     Key([mod], "w",
         lazy.window.kill(),
         desc="Kill focused window"),
-
     Key([mod, "control"], "r",
         lazy.restart(),
         desc="Restart Qtile"),
