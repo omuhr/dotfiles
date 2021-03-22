@@ -26,10 +26,11 @@
 
 from typing import List  # noqa: F401
 
-from libqtile import bar, layout, widget
+from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+
 
 mod = "mod4"
 terminal = guess_terminal()
@@ -120,7 +121,6 @@ keys = [
         desc="Shutdown Qtile"),
 
 ]
-
 groups = [Group(i) for i in "123456789"]
 
 for i in groups:
@@ -138,11 +138,10 @@ for i in groups:
         #     desc="move focused window to group {}".format(i.name)),
     ])
 
-layouts = [
-    layout.MonadTall(border_focus='#d9ffb3',
-                     border_width=1,
-                     margin=9),
-]
+layouts = [layout.MonadTall(border_focus="#81a2be",
+                            border_width=1,
+                            margin=9),
+          ]
 
 widget_defaults = dict(
     font='sans',
@@ -151,31 +150,30 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-screens = [
-    Screen(
-        top=bar.Bar(
-            [
-                widget.GroupBox(background=BG,
-                                foreground=FG),
-                widget.Prompt(background=BG,
-                              foreground=FG),
-                widget.WindowName(background=BG,
-                                  foreground=FG),
-                widget.Systray(),
-                widget.Wttr(format="%t%c",
-                            location={"Partille": "Partille"},
+top = bar.Bar([widget.GroupBox(background=BG,
+                               foreground=FG),
+               widget.Prompt(background=BG,
+                             foreground=FG),
+               widget.WindowName(format="{state}{name}",
+                                 background=BG,
+                                 foreground=FG),
+               widget.Systray(),
+               widget.Wttr(format="%t%c",
+                           location={"Partille": "Partille"},
+                           background=BG,
+                           foreground=FG),
+               widget.Sep(size_percent=50,
+                          background=BG,
+                          foreground=FG),
+               widget.Clock(format='%H:%M %a %d/%m',
                             background=BG,
                             foreground=FG),
-                widget.Sep(background=BG,
-                           foreground=FG),
-                widget.Clock(format='%H:%M %a %d/%m',
-                             background=BG,
-                             foreground=FG),
-            ],
-            24,
-        ),
-    ),
-]
+              ],
+              24,
+              opacity=0.8,
+             )
+
+screens = [Screen(top=top)]
 
 # Drag floating layouts.
 mouse = [
@@ -204,6 +202,11 @@ floating_layout = layout.Floating(float_rules=[
 ])
 auto_fullscreen = True
 focus_on_window_activation = "smart"
+
+# Hide top bar at startup
+@hook.subscribe.startup
+def autostart():
+    top.show(False)
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the
