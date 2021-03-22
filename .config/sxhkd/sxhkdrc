@@ -6,3 +6,17 @@ super + f
 				pcmanfm
 super + r
 				rofi -show drun
+XF86AudioRaiseVolume
+				pactl set-sink-volume 1 +1%
+XF86AudioLowerVolume
+				pactl set-sink-volume 1 -1%
+XF86AudioMute
+				pactl set-sink-mute 1 toggle
+XF86AudioPlay
+#				playerctl play-pause
+				~/scripts/playerctl-custom.sh
+XF86AudioNext
+				playerctl next
+XF86AudioPrev
+				playerctl previous
+				

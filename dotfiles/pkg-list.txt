@@ -7,6 +7,9 @@ tldr
 picom
 nitrogen
 sxhkd
+pulseaudio
+pavucontrol-qt
+playerctl
 feh
 ckb-next
 pcmanfm

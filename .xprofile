@@ -1,4 +1,5 @@
 nitrogen --set-zoom-fill --random &
 picom &
 spotifyd &
+playertcl &
 sxhkd &
