@@ -31,6 +31,10 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
+# Hide top bar at startup
+@hook.subscribe.startup
+def autostart():
+    top.show(False)
 
 mod = "mod4"
 terminal = guess_terminal()
@@ -150,28 +154,28 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-top = bar.Bar([widget.GroupBox(background=BG,
-                               foreground=FG),
-               widget.Prompt(background=BG,
-                             foreground=FG),
-               widget.WindowName(format="{state}{name}",
-                                 background=BG,
-                                 foreground=FG),
-               widget.Systray(),
-               widget.Wttr(format="%t%c",
-                           location={"Partille": "Partille"},
-                           background=BG,
-                           foreground=FG),
-               widget.Sep(size_percent=50,
-                          background=BG,
-                          foreground=FG),
-               widget.Clock(format='%H:%M %a %d/%m',
-                            background=BG,
-                            foreground=FG),
-              ],
-              24,
-              opacity=0.8,
-             )
+
+top = bar.Bar(
+    [
+    widget.Spacer(
+        length=960-54,
+        foreground=FG),
+    widget.Wttr(
+        format="%t %c",
+        location={"Partille": "Partille"},
+        foreground=FG),
+    widget.Sep(
+        size_percent=50,
+        foreground=FG),
+    widget.Clock(
+        format='%H:%M %a %d/%m',
+        foreground=FG),
+    ],
+    24,
+    opacity=0.8,
+    name="bar",
+    background=BG,
+)
 
 screens = [Screen(top=top)]
 
@@ -203,10 +207,6 @@ floating_layout = layout.Floating(float_rules=[
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 
-# Hide top bar at startup
-@hook.subscribe.startup
-def autostart():
-    top.show(False)
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the

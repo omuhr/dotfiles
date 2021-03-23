@@ -7,6 +7,8 @@ endif
 call plug#begin('~/.config/nvim/autload/plugged')	
 	Plug 'jiangmiao/auto-pairs'
 	Plug 'sheerun/vim-polyglot'
+  Plug 'yggdroot/indentline'
+  Plug 'kien/rainbow_parentheses.vim'
 call plug#end()
 
 set clipboard+=unnamedplus

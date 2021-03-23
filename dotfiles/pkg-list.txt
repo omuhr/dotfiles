@@ -29,5 +29,6 @@ mailspring -- probably
 
 TODO:
 - delete in vim w/o copying?
-- figure out gtk themeing (lxsession, lxappearance?)
 - CLI file manager
+- Add float-toggle to qtile
+- nvim: comfortable-motion, set mouse=a

@@ -7,11 +7,11 @@ super + f
 super + r
 				rofi -show drun
 XF86AudioRaiseVolume
-				pactl set-sink-volume 1 +1%
+				pactl set-sink-volume @DEFAULT_SINK@ +1%
 XF86AudioLowerVolume
-				pactl set-sink-volume 1 -1%
+				pactl set-sink-volume @DEFAULT_SINK@ -1%
 XF86AudioMute
-				pactl set-sink-mute 1 toggle
+				pactl set-sink-mute @DEFAULT_SINK@ toggle
 XF86AudioPlay
 #				playerctl play-pause
 				~/scripts/playerctl-custom.sh
@@ -19,4 +19,5 @@ XF86AudioNext
 				playerctl next
 XF86AudioPrev
 				playerctl previous
-				
+super + shift + ctrl + q
+				shutdown -P now
