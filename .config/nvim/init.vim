@@ -4,11 +4,16 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall
 endif
 
-call plug#begin('~/.config/nvim/autload/plugged')	
+function! DoRemote(arg)
+  UpdateRemotePlugins
+endfunction
+
+call plug#begin('~/.config/nvim/autoload/plugged')	
 	Plug 'jiangmiao/auto-pairs'
 	Plug 'sheerun/vim-polyglot'
   Plug 'yggdroot/indentline'
   Plug 'kien/rainbow_parentheses.vim'
+  Plug 'daeyun/vim-matlab', { 'do': function('DoRemote') }
 call plug#end()
 
 set clipboard+=unnamedplus

@@ -5,7 +5,7 @@ super + b
 super + f
 				pcmanfm
 super + r
-				rofi -show drun
+				rofi -show run
 XF86AudioRaiseVolume
 				pactl set-sink-volume @DEFAULT_SINK@ +1%
 XF86AudioLowerVolume
