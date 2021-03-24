@@ -1,12 +1,12 @@
+function! DoRemote(arg)
+  UpdateRemotePlugins
+endfunction
+
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall
 endif
-
-function! DoRemote(arg)
-  UpdateRemotePlugins
-endfunction
 
 call plug#begin('~/.config/nvim/autoload/plugged')	
 	Plug 'jiangmiao/auto-pairs'
@@ -18,3 +18,5 @@ call plug#end()
 
 set clipboard+=unnamedplus
 set number relativenumber
+let g:matlab_automappings=1
+source /home/muoscar/.config/nvim/autoload/plugged/vim-matlab/ftplugin/matlab/vim-matlab.vim
