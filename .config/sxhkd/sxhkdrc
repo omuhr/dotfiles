@@ -14,7 +14,7 @@ XF86AudioMute
 				pactl set-sink-mute @DEFAULT_SINK@ toggle
 XF86AudioPlay
 #				playerctl play-pause
-				~/scripts/playerctl-custom.sh
+				~/.scripts/playerctl-custom.sh
 XF86AudioNext
 				playerctl next
 XF86AudioPrev

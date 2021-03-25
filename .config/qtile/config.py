@@ -203,6 +203,7 @@ floating_layout = layout.Floating(float_rules=[
     Match(wm_class='ssh-askpass'),  # ssh-askpass
     Match(title='branchdialog'),  # gitk
     Match(title='pinentry'),  # GPG key password entry
+    Match(wm_class='MATLAB R2021a - academic use')
 ])
 auto_fullscreen = True
 focus_on_window_activation = "smart"
