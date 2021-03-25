@@ -1,5 +1,3 @@
-!!! CAUTION - CREDENTIALS IN SPOTIFYD AND LOCATION IN QTILE WEATHER !!!
-
 paru
 alacritty
 fish
@@ -7,6 +5,7 @@ tldr
 picom
 nitrogen
 sxhkd
+nerd-fonts-complete
 pulseaudio
 pavucontrol-qt
 playerctl
@@ -28,7 +27,4 @@ spotify-tui
 mailspring -- probably
 
 TODO:
-- delete in vim w/o copying?
 - CLI file manager
-- Add float-toggle to qtile
-- nvim: comfortable-motion, set mouse=a

@@ -1,29 +1,3 @@
-# Copyright (c) 2010 Aldo Cortesi
-# Copyright (c) 2010, 2014 dequis
-# Copyright (c) 2012 Randall Ma
-# Copyright (c) 2012-2014 Tycho Andersen
-# Copyright (c) 2012 Craig Barnes
-# Copyright (c) 2013 horsik
-# Copyright (c) 2013 Tao Sauvage
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
 from typing import List  # noqa: F401
 
 from libqtile import bar, layout, widget, hook
@@ -40,8 +14,21 @@ mod = "mod4"
 terminal = guess_terminal()
 
 # FG and BG colors
-FG = "#c7ccd1"
-BG = "#1c2023"
+FG = "#d8dee9"
+BG = "#2e3440"
+borderColor = "#81a2be"
+
+""" KEYBINDINGS
+modifiers:
+    A list of modifier specifications. Modifier specifications are one of:
+    "shift", "lock", "control", "mod1", "mod2", "mod3", "mod4", "mod5".
+key:
+    A key specification, e.g. "a", "Tab", "Return", "space".
+commands:
+    If multiple Call objects are specified, they are run in sequence.
+desc:
+    description to be added to the key binding
+"""
 
 keys = [
     # Switch between windows
@@ -57,8 +44,11 @@ keys = [
     Key([mod], "k",
         lazy.layout.up(),
         desc="Move focus up"),
-    Key([mod], "space",
+    Key([mod], "Tab",
         lazy.layout.next(),
+        desc="Move window focus to other window"),
+    Key([mod, "shift"], "Tab",
+        lazy.layout.previous(),
         desc="Move window focus to other window"),
 
     # Move windows between left/right columns or move up/down in current stack.
@@ -74,6 +64,9 @@ keys = [
         desc="Move window down"),
     Key([mod, "shift"], "k",
         lazy.layout.shuffle_up(),
+        desc="Move window up"),
+    Key([mod], "space",
+        lazy.layout.swap_main(),
         desc="Move window up"),
 
     # Grow windows. If current window is on the edge of screen and direction
@@ -95,20 +88,15 @@ keys = [
         desc="Reset all window sizes"),
 
     # Toggle between split and unsplit sides of stack.
-    # Split = all windows displayed
-    # Unsplit = 1 window displayed, like Max layout, but still with
-    # multiple stack panes
-    Key([mod, "shift"], "Return",
-        lazy.layout.toggle_split(),
-        desc="Toggle between split and unsplit sides of stack"),
-
-    # Enables mod+tab to move between groups, +shift will move backwards.
-    Key([mod], "Tab",
-        lazy.screen.next_group(),
-        desc="Go to next group"),
-    Key([mod, "shift"], "Tab",
-        lazy.screen.prev_group(),
-        desc="Go to next group"),
+    Key([mod], "m",
+        lazy.next_layout(),
+        desc="Toggle maximize focused window"),
+    Key([mod], "v",
+        lazy.window.toggle_floating(),
+        desc="Toggle floating on focused window"),
+    # Key([mod, "shift"], "Return",
+        # lazy.layout.toggle_split(),
+        # desc="Toggle between split and unsplit sides of stack"),
 
     # Miscellaneous
     Key([mod], "period",
@@ -142,13 +130,17 @@ for i in groups:
         #     desc="move focused window to group {}".format(i.name)),
     ])
 
-layouts = [layout.MonadTall(border_focus="#81a2be",
-                            border_width=1,
-                            margin=9),
+layouts = [ layout.MonadTall(border_focus=borderColor,
+                             border_width=1,
+                             margin=9,
+                             ratio=0.60,
+                             max_ratio=0.9,
+                             min_ratio=0.1),
+            layout.Max(),
           ]
 
 widget_defaults = dict(
-    font='sans',
+    font='Hack',
     fontsize=12,
     padding=3,
 )
@@ -194,7 +186,10 @@ main = None  # WARNING: this is deprecated and will be removed soon
 follow_mouse_focus = False
 bring_front_click = False
 cursor_warp = False
-floating_layout = layout.Floating(float_rules=[
+floating_layout = layout.Floating(
+    border_focus=borderColor,
+    border_width=1,
+    float_rules=[
     # Run the utility of `xprop` to see the wm class and name of an X client.
     *layout.Floating.default_float_rules,
     Match(wm_class='confirmreset'),  # gitk
