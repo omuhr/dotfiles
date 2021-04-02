@@ -5,11 +5,6 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
-# Hide top bar at startup
-@hook.subscribe.startup
-def autostart():
-    top.show(False)
-
 mod = "mod4"
 terminal = guess_terminal()
 
@@ -140,7 +135,8 @@ layouts = [ layout.MonadTall(border_focus=borderColor,
           ]
 
 widget_defaults = dict(
-    font='Hack',
+    font='Ubuntu Nerd Font Light',
+    # font='Noto Sans',
     fontsize=12,
     padding=3,
 )
@@ -155,13 +151,26 @@ top = bar.Bar(
     widget.Wttr(
         format="%t %c",
         location={"Partille": "Partille"},
+        font="Ubuntu Nerd Font",
         foreground=FG),
     widget.Sep(
         size_percent=50,
-        foreground=FG),
+        foreground=FG
+    ),
+    widget.Mpris2(
+        name='spotifyd',
+        objname="org.mpris.MediaPlayer2.spotifyd",
+        display_metadata=['xesam:title', 'xesam:artist'],
+        scroll_chars=30,
+        stop_pause_text='asd',
+        foreground=FG,
+        # **widget_defaults
+    ),
     widget.Clock(
+        font="Ubuntu Nerd Font",
         format='%H:%M %a %d/%m',
         foreground=FG),
+    # widget.Spacer(),
     ],
     24,
     opacity=0.8,
@@ -177,7 +186,8 @@ mouse = [
          start=lazy.window.get_position()),
     Drag([mod], "Button3", lazy.window.set_size_floating(),
          start=lazy.window.get_size()),
-    Click([mod], "Button2", lazy.window.bring_to_front())
+    # Click([mod], "Button2", lazy.window.bring_to_front())
+    Click([mod], "Button8", lazy.window.toggle_floating())
 ]
 
 dgroups_key_binder = None
@@ -202,6 +212,11 @@ floating_layout = layout.Floating(
 ])
 auto_fullscreen = True
 focus_on_window_activation = "smart"
+
+# Hide top bar at startup
+@hook.subscribe.startup
+def autostart():
+    top.show(False)
 
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this

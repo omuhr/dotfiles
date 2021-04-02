@@ -3,9 +3,16 @@ super + Return
 super + b
 				firefox
 super + f
-				pcmanfm
+				ranger
 super + r
 				rofi -show run
+super + i
+				nitrogen --set-zoom-fill --random &
+super + c
+				alacritty -e /home/muoscar/.scripts/launch-matlab.sh
+super + shift + ctrl + q
+				shutdown -P now
+# Media keys
 XF86AudioRaiseVolume
 				pactl set-sink-volume @DEFAULT_SINK@ +1%
 XF86AudioLowerVolume
@@ -19,5 +26,3 @@ XF86AudioNext
 				playerctl next
 XF86AudioPrev
 				playerctl previous
-super + shift + ctrl + q
-				shutdown -P now

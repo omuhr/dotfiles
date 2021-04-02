@@ -4,3 +4,4 @@ playertcl &
 spotifyd &
 sxhkd &
 ckb-next -b &
+setxkbmap se
