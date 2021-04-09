@@ -3,7 +3,7 @@ super + Return
 super + b
 				firefox
 super + f
-				ranger
+				alacritty -e ranger
 super + r
 				rofi -show run
 super + i

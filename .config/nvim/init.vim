@@ -7,9 +7,8 @@ endif
 function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
-call plug#begin('~/.config/nvim/autoload/plugged')	
+call plug#begin('~/.config/nvim/autoload/plugged')
 	Plug 'sheerun/vim-polyglot'
-  Plug 'yggdroot/indentline'
   Plug 'kien/rainbow_parentheses.vim'
   Plug 'daeyun/vim-matlab', { 'do': function('DoRemote') }
   Plug 'yuttie/comfortable-motion.vim'
@@ -18,27 +17,54 @@ call plug#begin('~/.config/nvim/autoload/plugged')
   Plug 'lambdalisue/fern.vim'
   Plug 'lambdalisue/nerdfont.vim'
   Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+  Plug 'lambdalisue/fern-hijack.vim'
   Plug 'arcticicestudio/nord-vim'
+  Plug 'joshdick/onedark.vim'
+  Plug 'lervag/vimtex'
+  Plug 'dahu/vim-fanfingtastic'
 call plug#end()
 
-filetype plugin on
+filetype plugin indent on
 autocmd BufNewFile,BufRead *.m set filetype=matlab
 syntax on
 
-colorscheme nord
+let g:onedark_terminal_italics=1
+colorscheme onedark
 
-set mouse=a
-set clipboard+=unnamedplus
-set number relativenumber
-set whichwrap+=<,>,h,l,[,]
-set splitbelow splitright
+" sets
+  set termguicolors
+  set mouse=a
+  set clipboard+=unnamedplus
+  set number relativenumber
+  set splitbelow splitright
+  set textwidth=80
+  set hidden
+  set encoding=utf-8
+  set nowrap
+  set smarttab
+  set smartindent
+  set autoindent
+  set background=dark
+  set colorcolumn=80
+  set cocu=""
 
-let g:matlab_automappings=1
-let mapleader = " "
-let g:mapleader = " "
+"set whichwrap+=<,>,h,l,[,]
 
-map <ScrollWheelUp> <C-Y>
-map <ScrollWheelDown> <C-E>
+" lets
+  let g:matlab_automappings=1
+  let mapleader = " "
+  let g:mapleader = " "
+
+" vimtex
+  let g:tex_flavour='latex'
+  let g:vimtex_view_method='zathura'
+  let g:vimtex_quickfix_mode=0
+  set conceallevel=2
+  let g:vimtex_syntax_conceal={'math_super_sub':'1', 'math_fracs':'1'}
+  "let g:vimtex_syntax_conceal_cites={'type':'icon'}
+  " mouse
+  map <ScrollWheelUp> <C-Y>
+  map <ScrollWheelDown> <C-E>
 
 " Fuck habits
   nmap <Up>    <Nop>
@@ -71,16 +97,6 @@ map <ScrollWheelDown> <C-E>
   inoremap <C-h> <Left>
   inoremap <C-l> <Right>
 
-" Tab to tab in normal and visual modes
-  nmap >> <Nop>
-  nmap << <Nop>
-  vmap >> <Nop>
-  vmap << <Nop>
-  nnoremap <Tab>   >>
-  nnoremap <S-Tab> <<
-  vnoremap <Tab>   >><Esc>gv
-  vnoremap <S-Tab> <<<Esc>gv
-
 " Y yanks from cursor to end of line
   nnoremap Y y$
 
@@ -100,8 +116,9 @@ map <ScrollWheelDown> <C-E>
   nnoremap <leader>C "+C
   vnoremap <leader>d "+d
   vnoremap <leader>C "+C
+
 " Fern
-  let g:fern#drawer_width = 30
+  let g:fern#drawer_width = 40
   let g:fern#default_hidden = 1
   let g:fern#disable_drawer_auto_quit = 1
 
@@ -127,3 +144,15 @@ map <ScrollWheelDown> <C-E>
   augroup END
 
   let g:fern#renderer = "nerdfont"
+
+" Removes trailing spaces
+  function TrimWhiteSpace()
+    %s/\s*$//
+    ''
+  endfunction
+
+  set list listchars=trail:.,extends:>
+  autocmd FileWritePre * call TrimWhiteSpace()
+  autocmd FileAppendPre * call TrimWhiteSpace()
+  autocmd FilterWritePre * call TrimWhiteSpace()
+  autocmd BufWritePre * call TrimWhiteSpace()

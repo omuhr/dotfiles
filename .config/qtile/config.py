@@ -84,7 +84,7 @@ keys = [
 
     # Toggle between split and unsplit sides of stack.
     Key([mod], "m",
-        lazy.next_layout(),
+        lazy.window.toggle_maximize(),
         desc="Toggle maximize focused window"),
     Key([mod], "v",
         lazy.window.toggle_floating(),
@@ -132,6 +132,7 @@ layouts = [ layout.MonadTall(border_focus=borderColor,
                              max_ratio=0.9,
                              min_ratio=0.1),
             layout.Max(),
+           layout.Columns(num_columns=3),
           ]
 
 widget_defaults = dict(
