@@ -9,7 +9,10 @@ function! DoRemote(arg)
 endfunction
 call plug#begin('~/.config/nvim/autoload/plugged')
 	Plug 'sheerun/vim-polyglot'
-  Plug 'kien/rainbow_parentheses.vim'
+  Plug 'luochen1990/rainbow'
+  Plug 'cohama/lexima.vim'
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-repeat'
   Plug 'daeyun/vim-matlab', { 'do': function('DoRemote') }
   Plug 'yuttie/comfortable-motion.vim'
   Plug 'preservim/nerdcommenter'
@@ -30,6 +33,7 @@ syntax on
 
 let g:onedark_terminal_italics=1
 colorscheme onedark
+let g:rainbow_active = 1
 
 " sets
   set termguicolors

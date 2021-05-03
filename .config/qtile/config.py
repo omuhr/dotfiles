@@ -63,6 +63,8 @@ keys = [
     Key([mod], "space",
         lazy.layout.swap_main(),
         desc="Move window up"),
+    Key([mod, "shift", "control"], "h", lazy.layout.swap_column_left()),
+    Key([mod, "shift", "control"], "l", lazy.layout.swap_column_right()),
 
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
@@ -86,9 +88,9 @@ keys = [
     Key([mod], "m",
         lazy.window.toggle_maximize(),
         desc="Toggle maximize focused window"),
-    Key([mod], "v",
-        lazy.window.toggle_floating(),
-        desc="Toggle floating on focused window"),
+    Key([mod, "control"], "Tab",
+        lazy.next_layout(),
+        desc="Cycle between layouts"),
     # Key([mod, "shift"], "Return",
         # lazy.layout.toggle_split(),
         # desc="Toggle between split and unsplit sides of stack"),
@@ -131,8 +133,10 @@ layouts = [ layout.MonadTall(border_focus=borderColor,
                              ratio=0.60,
                              max_ratio=0.9,
                              min_ratio=0.1),
-            layout.Max(),
-           layout.Columns(num_columns=3),
+            layout.Columns(num_columns=3,
+                           border_focus=borderColor,
+                           border_width=1,
+                           margin=[0, 0, 0, 0]),
           ]
 
 widget_defaults = dict(
