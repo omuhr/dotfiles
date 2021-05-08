@@ -1,3 +1,4 @@
+" Install vim-plug if it isn't already
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -7,35 +8,59 @@ endif
 function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
+
 call plug#begin('~/.config/nvim/autoload/plugged')
-	Plug 'sheerun/vim-polyglot'
+  " Add syntax and indentation support for a ton of languages
+  Plug 'sheerun/vim-polyglot'
+  " Add ranbow coloring to nested delimiters
   Plug 'luochen1990/rainbow'
+  " Auto close delimiters
   Plug 'cohama/lexima.vim'
+  " Improves interaction with delimiter
   Plug 'tpope/vim-surround'
+  " Extends repeatability with . function
   Plug 'tpope/vim-repeat'
+  " Enables matlab interaction
   Plug 'daeyun/vim-matlab', { 'do': function('DoRemote') }
+  " Smooth scrolling
   Plug 'yuttie/comfortable-motion.vim'
+  " Comment engine
   Plug 'preservim/nerdcommenter'
-  Plug 'matze/vim-move' " Move lines/blocks with alt-h,j,k,l
+  " Move lines/blocks with alt-h,j,k,l
+  Plug 'matze/vim-move'
+  " File manager
   Plug 'lambdalisue/fern.vim'
+  " Nerdfont icons for fern
   Plug 'lambdalisue/nerdfont.vim'
   Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+  " Allows fern to launch when neovim is run on a directory
   Plug 'lambdalisue/fern-hijack.vim'
+  " Nord theme
   Plug 'arcticicestudio/nord-vim'
+  " One Dark theme
   Plug 'joshdick/onedark.vim'
   Plug 'lervag/vimtex'
+  " Allow f, F, t, and T to search accros line breaks
   Plug 'dahu/vim-fanfingtastic'
+  " Autocomplete engine
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  " Snippet engine
+  Plug 'SirVer/ultisnips'
+  " Snippets are separated from the engine. Add this if you want them:
+  Plug 'honza/vim-snippets'
+  " Improved environment matching
+  Plug 'andymass/vim-matchup'
 call plug#end()
 
 filetype plugin indent on
 autocmd BufNewFile,BufRead *.m set filetype=matlab
 syntax on
 
-let g:onedark_terminal_italics=1
 colorscheme onedark
-let g:rainbow_active = 1
+let g:onedark_terminal_italics=1
 
-" sets
+
+" Sets
   set termguicolors
   set mouse=a
   set clipboard+=unnamedplus
@@ -51,22 +76,16 @@ let g:rainbow_active = 1
   set background=dark
   set colorcolumn=80
   set cocu=""
+  "set whichwrap+=<,>,h,l,[,]
 
-"set whichwrap+=<,>,h,l,[,]
-
-" lets
+" Lets
+  let g:rainbow_active = 1
+  let g:deoplete#enable_at_startup = 1
   let g:matlab_automappings=1
   let mapleader = " "
   let g:mapleader = " "
 
-" vimtex
-  let g:tex_flavour='latex'
-  let g:vimtex_view_method='zathura'
-  let g:vimtex_quickfix_mode=0
-  set conceallevel=2
-  let g:vimtex_syntax_conceal={'math_super_sub':'1', 'math_fracs':'1'}
-  "let g:vimtex_syntax_conceal_cites={'type':'icon'}
-  " mouse
+" Enable mouse scrolling
   map <ScrollWheelUp> <C-Y>
   map <ScrollWheelDown> <C-E>
 
@@ -82,7 +101,7 @@ let g:rainbow_active = 1
   nnoremap <C-k> <C-w>k
   nnoremap <C-l> <C-w>l
 
-" Capitalized movement for longer distance
+" Capitalized movement for long distance
   map ^ <Nop>
   map { <Nop>
   map } <Nop>
@@ -115,11 +134,50 @@ let g:rainbow_active = 1
   vnoremap C "_C
 
 " Leader deletes to clipboard
+  nnoremap <leader>x "+x
+  nnoremap <leader>X "+X
   nnoremap <leader>d "+d
   nnoremap <leader>D "+D
+  nnoremap <leader>c "+c
   nnoremap <leader>C "+C
+
+  vnoremap <leader>x "+x
+  vnoremap <leader>X "+X
   vnoremap <leader>d "+d
+  vnoremap <leader>D "+D
+  vnoremap <leader>c "+c
   vnoremap <leader>C "+C
+
+" Vimtex
+  let g:tex_flavour='latex'
+  let g:vimtex_view_method='zathura'
+  let g:vimtex_quickfix_mode=0
+  set conceallevel=2
+  let g:vimtex_syntax_conceal={'math_super_sub':'1', 'math_fracs':'1'}
+  "let g:vimtex_syntax_conceal_cites={'type':'icon'}
+
+" Matchup
+  " Override vimtex matchit rules
+  let g:matchup_override_vimtex = 1
+
+" Lexima
+  " Add support for $$ in latex
+  call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'latex'})
+  call lexima#add_rule({'char': '$', 'at': '\%#\$', 'leave': 1, 'filetype': 'latex'})
+  call lexima#add_rule({'char': '<BS>', 'at': '\$\%#\$', 'delete': 1, 'filetype': 'latex'})
+
+" Ultisnips
+  " Vimtex specific
+  call deoplete#custom#var('omni', 'input_patterns', {
+      \ 'tex': g:vimtex#re#deoplete
+      \})
+  " Ultisnips binds
+  let g:UltiSnipsExpandTrigger="<tab>"
+  let g:UltiSnipsJumpForwardTrigger="<a-n>"
+  let g:UltiSnipsJumpBackwardTrigger="<a-p>"
+
+  " If you want :UltiSnipsEdit to split your window.
+  let g:UltiSnipsEditSplit="vertical"
 
 " Fern
   let g:fern#drawer_width = 40
@@ -149,7 +207,7 @@ let g:rainbow_active = 1
 
   let g:fern#renderer = "nerdfont"
 
-" Removes trailing spaces
+" Removes trailing whitespace
   function TrimWhiteSpace()
     %s/\s*$//
     ''
