@@ -40,7 +40,7 @@ keys = [
         lazy.layout.up(),
         desc="Move focus up"),
     Key([mod], "Tab",
-        lazy.layout.next(),
+        lazy.next_screen(),
         desc="Move window focus to other window"),
     Key([mod, "shift"], "Tab",
         lazy.layout.previous(),

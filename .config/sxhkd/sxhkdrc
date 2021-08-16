@@ -7,7 +7,7 @@ super + f
 super + r
 				rofi -show run
 super + i
-				nitrogen --set-zoom-fill --random &
+				nitrogen --head=0 --set-zoom-fill --random && nitrogen --head=1 --set-zoom-fill --random &
 super + c
 				alacritty -e /home/muoscar/.scripts/launch-matlab.sh
 super + shift + ctrl + q
